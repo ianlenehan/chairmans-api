@@ -22,12 +22,14 @@ class RoundsController < ApplicationController
   def create_rounds
     scores = params[:scores]
     scores.each do |score|
-      player = Player.find_by(nick_name: score[0])
-      Round.create(
-        round_date: round_date,
-        player_id: player.id,
-        score: score[1]['score'].to_i
-      )
+      if score != ''
+        player = Player.find_by(nick_name: score[0])
+        Round.create(
+          round_date: round_date,
+          player_id: player.id,
+          score: score[1]['score'].to_i
+        )
+      end
     end
   end
 
