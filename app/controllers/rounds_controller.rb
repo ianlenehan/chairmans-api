@@ -2,7 +2,7 @@ class RoundsController < ApplicationController
   protect_from_forgery with: :null_session
 
   def show
-    render json: { results: results, players: Player.all, rounds: rounds }
+    render json: { results: results, players: Player.all, round_counts: round_counts }
   end
 
   def create
@@ -30,9 +30,11 @@ class RoundsController < ApplicationController
     results.order(:round_date).reverse
   end
 
-  def rounds
-    rounds = Round.where('round_date > ?', from_date)
-    rounds.order(:round_date).reverse
+  def round_counts
+    Player.all.map do |player|
+      count = player.rounds.where('score > ?', 0).count
+      {player.id => count}
+    end
   end
 
   def create_rounds
