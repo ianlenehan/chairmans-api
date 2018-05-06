@@ -7,4 +7,8 @@ class PlayersController < ApplicationController
     rounds = player.rounds.where('round_date > ?', from)
     render json: rounds
   end
+
+  def show
+    render json: Player.all
+  end
 end
