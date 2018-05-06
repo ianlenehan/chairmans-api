@@ -14,7 +14,7 @@ class RoundsController < ApplicationController
   def full_results
     result_rounds = results.map do |result|
       rounds = Round.where(round_date: result.round_date)
-      { result: result, rounds: rounds }
+      { result: result, scores: rounds }
     end
     render json: result_rounds
   end
