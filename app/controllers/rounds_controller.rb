@@ -22,7 +22,8 @@ class RoundsController < ApplicationController
   private
 
   def from_date
-    params[:from].to_date
+    # params[:from].to_date
+    return "2018-12-31"
   end
 
   def results
