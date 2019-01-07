@@ -33,7 +33,7 @@ class RoundsController < ApplicationController
 
   def round_counts
     Player.all.map do |player|
-      count = player.rounds.where('score > ?', 0).count
+      count = player.rounds.where('round_date > ?', from_date).where('score > ?', 0).count
       {player.nick_name => count}
     end
   end
