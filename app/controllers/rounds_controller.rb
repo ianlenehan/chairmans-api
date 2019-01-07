@@ -22,27 +22,26 @@ class RoundsController < ApplicationController
   private
 
   def from_date
-    return params[:from]
-    # return "2018-12-31"
+    params[:from]
   end
 
   def to_date
-    if from_date === "2018-12-31"
+    if from_date == "2019-01-01"
       d = "2019-12-31"
-    elsif from_date === "2017-12-31"
+    elsif from_date == "2018-01-01"
       d = "2018-12-31"
     end
     d
   end
 
   def results
-    results = Result.where('round_date > ?', from_date).where("round_date >= from_date AND round_date <= to_date")
+    results = Result.where(round_date: (from_date...to_date))
     results.order(:round_date).reverse
   end
 
   def round_counts
     Player.all.map do |player|
-      count = player.rounds.where("round_date >= from_date AND round_date <= to_date").where('score > ?', 0).count
+      count = player.rounds.where(round_date: (from_date...to_date)).count
       {player.nick_name => count}
     end
   end
